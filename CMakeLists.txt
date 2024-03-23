@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.13)
+set(VCPKG_ROOT "/home/yuibo/code/vcpkg")
+set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 
 project(seal_test)
 
-add_executable(test test.cpp)
+set(zstd_DIR "${VCPKG_ROOT}/packages/zstd_x64-linux/share/zstd")
+set(Microsoft.GSL_DIR "${VCPKG_ROOT}/packages/ms-gsl_x64-linux/share/Microsoft.GSL")
+SET(SEAL_DIR "${VCPKG_ROOT}/packages/seal_x64-linux/share/seal")
+find_package(SEAL 4.1 CONFIG REQUIRED)
 
-SET(SEAL_DIR "/home/ubuntu/flpsi/SEAL/build/cmake")
-find_package(SEAL)
+add_executable(test test.cc)
 
-if(NOT SEAL_FOUND)
-    message("seal not found")
-endif()
-
-target_link_libraries(test SEAL::seal)
+target_link_libraries(test PRIVATE SEAL::seal)

@@ -1,6 +1,7 @@
-#include "seal/seal.h"
-
 #include <vector>
+#include <ctime>
+
+#include "seal/seal.h"
 
 using namespace std;
 using namespace seal;
@@ -67,4 +68,12 @@ int main() {
     std::cout << "0x" << d.to_string() << std::endl;
     // hex_string_to_uint64(d.to_string(), &resu);
     // std::cout << resu << std::endl;
+    
+    clock_t start = clock();
+    for (int i = 0; i< (1 << 10); i++) {
+        eval.add(c1, c1, r);
+        // eval.add_plain(res, coeff[3], r);
+    }
+    clock_t end = clock();
+    std::cout << (double)(end - start) / CLOCKS_PER_SEC << "s" << std::endl;
 }
